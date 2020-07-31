@@ -13,18 +13,19 @@ const COLORS_9 = {
 /* Your code goes here! */
 
 //Create a variable `h1` that refers to the `<h1>` element in the DOM.
-
+const h1Heading = document.querySelector("h1")
 
 //Change the `textContent` of the `<h1>` element to be "Which Swatch?"
-
+h1Heading.textContent = "Which Swatch?"
 
 //Somehow the rainbow icon image was included without an alt tag! Set its `alt`
 //attribute to be "A beautiful rainbow".
-
+const image = document.querySelector("img");
+image.setAttribute("alt", "A beautiful rainbow");
 
 //Give the image the Bootstrap-provided `float-right` CSS class to make it float
 //to the right of the screen
-
+image.classList.add("float-right")
 
 /*Define a function `createColorBox()` that takes in two parameters: a color 
 string (e.g., "blue") and a numeric size (in pixels, e.g., 100). The function 
@@ -32,14 +33,21 @@ shoukld do the following:
   - create a new `div` element
   - give the element the CSS class of `d-inline-block`
   - give the element an inline style `background-color` of the argument color
-  - give the element an inlight style `width` and `height` properties that are 
+  - give the element an inline style `width` and `height` properties that are 
     both the passed in size in pixels(as strings, e.g., "100px")
   - RETURNS the div element!
 You can test this function by logging out the returned value and checking its
 attributes.
 */
-
-
+function createColorBox(color, size) {
+  const newDivElem = document.createElement("div");
+  newDivElem.classList.add("d-inline-block");
+  newDivElem.style.backgroundColor = color;
+  newDivElem.style.width = size + "px";
+  newDivElem.style.height = size + "px";
+  return newDivElem;
+}
+console.log(createColorBox("blue", 100));
 
 /* Define a function `getElementWidth()` that takes in a DOM element (not a 
 string!). This function should return the width in pixels (a number) of that
@@ -48,8 +56,11 @@ element.
    argument element. This method returns an Object containing the element's
    width and height. Return the `width` value of that object.
 */
-
-
+function getElementWidth(element) {
+  const boundingRect = element.getBoundingClientRect();
+  //console.log(boundingRect.width);
+  return boundingRect.width;
+}
 
 /* Define a function `renderPaletteRow()` that takes in two arguments: array of 
 color strings (like a SINGLE ELEMENT of the `COLORS_9` object), and a "parent" 
@@ -71,8 +82,24 @@ browser window unless you refresh.
 
 You should NOT include any test calls when running Jest tests!
 */
-
-
+function renderPaletteRow(colorArray, parentElem) {
+  console.log("what's my parent elem? ");
+  console.log(parentElem);
+  const container = document.createElement("div");
+  const parentElementWidth = getElementWidth(parentElem);
+  const boxWidth = parentElementWidth / colorArray.length;
+  for (let i = 0; i < colorArray.length; i++) {
+    //console.log("what's my parent elem? " + parentElem);
+    const newColorBox = createColorBox(colorArray[i], boxWidth); 
+    container.appendChild(newColorBox);
+  }
+  parentElem.appendChild(container);
+}
+let mainVar = document.querySelector("main");
+console.log("i'm checking this for sure");
+console.log(mainVar);
+console.log(getElementWidth(mainVar));
+console.log(renderPaletteRow(COLORS_9.Reds, mainVar));
 
 /* Define a function `renderPaletteTable()` that takes no arguments and renders 
 a color palette row for each of the palettes in the `COLORS_9` object into the 
@@ -84,8 +111,12 @@ Tip: note that `COLORS_9` is an object, not an array! You'll need to use a
 
 Call your `renderPaletteTable()` method to display all the color palettes!
 */
-
-
+function renderPaletteTable() {
+  for (const property in COLORS_9) {
+    renderPaletteRow(property, "main");
+  }
+}
+renderPaletteTable();
 
 //Finally, remove the paragraph in the header that explains how to complete the 
 //problem.
