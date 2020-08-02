@@ -58,7 +58,6 @@ element.
 */
 function getElementWidth(element) {
   const boundingRect = element.getBoundingClientRect();
-  //console.log(boundingRect.width);
   return boundingRect.width;
 }
 
@@ -83,23 +82,16 @@ browser window unless you refresh.
 You should NOT include any test calls when running Jest tests!
 */
 function renderPaletteRow(colorArray, parentElem) {
-  console.log("what's my parent elem? ");
-  console.log(parentElem);
   const container = document.createElement("div");
   const parentElementWidth = getElementWidth(parentElem);
   const boxWidth = parentElementWidth / colorArray.length;
   for (let i = 0; i < colorArray.length; i++) {
-    //console.log("what's my parent elem? " + parentElem);
     const newColorBox = createColorBox(colorArray[i], boxWidth); 
     container.appendChild(newColorBox);
   }
   parentElem.appendChild(container);
 }
-let mainVar = document.querySelector("main");
-console.log("i'm checking this for sure");
-console.log(mainVar);
-console.log(getElementWidth(mainVar));
-console.log(renderPaletteRow(COLORS_9.Reds, mainVar));
+//console.log(renderPaletteRow(COLORS_9.Reds, document.querySelector("main")));
 
 /* Define a function `renderPaletteTable()` that takes no arguments and renders 
 a color palette row for each of the palettes in the `COLORS_9` object into the 
@@ -113,15 +105,15 @@ Call your `renderPaletteTable()` method to display all the color palettes!
 */
 function renderPaletteTable() {
   for (const property in COLORS_9) {
-    renderPaletteRow(property, "main");
+    renderPaletteRow(COLORS_9[property], document.querySelector("main"));
   }
 }
 renderPaletteTable();
 
 //Finally, remove the paragraph in the header that explains how to complete the 
 //problem.
-
-
+const headerParagraph = document.querySelector("p");
+headerParagraph.remove();
 
 //Make functions and variables available to tester. DO NOT MODIFY THIS.
 if(typeof module !== 'undefined' && module.exports){
