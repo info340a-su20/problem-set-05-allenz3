@@ -53,7 +53,6 @@ function renderTaskList(taskList) {
     list.removeChild(list.lastChild);
   }
   //https://www.w3docs.com/snippets/javascript/how-to-remove-all-the-child-elements-of-a-dom-node-in-javascript.html
-  //list.removeChild(document.querySelectorAll("li"));
   for (let i = 0; i < taskList.length; i++) {
     //console.log(taskList[i].description);
     list.appendChild(createTaskItemElement(taskList[i]));
